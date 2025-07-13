@@ -113,3 +113,14 @@ type ShortUrlDB struct {
     DSN string
 }
 ```
+
+## 参数校验
+1. 使用validator库
+
+https://pkg.go.dev/github.com/go-playground/validator/v10
+
+下载依赖
+```bash
+go get -u github.com/go-playground/validator/v10
+```
+在`shortener.api`中为结构体添加校验规则tag

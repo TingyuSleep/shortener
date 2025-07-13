@@ -1,4 +1,4 @@
-// 由于lurl可能过长，所以引入md5，为其添加索引
+// 由于lurl可能过长，占用空间大，全表扫描查询耗时久，所以引入md5，为其添加索引
 CREATE TABLE `short_url_map`
 (
     `id`        BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',

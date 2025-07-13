@@ -6,10 +6,12 @@ type Config struct {
 	rest.RestConf
 
 	ShortUrlDB ShortUrlDB
-	Sequence   struct { // 匿名结构体
+
+	Sequence struct { // 匿名结构体
 		DSN string
 	}
 }
+
 type ShortUrlDB struct { // 命名结构体
 	DSN string
 }
