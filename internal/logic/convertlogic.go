@@ -45,7 +45,7 @@ func (l *ConvertLogic) Convert(req *types.ConvertRequest) (resp *types.ConvertRe
 	md5Value := md5.Sum([]byte(req.LongUrl)) // []byte(字符串) 表示强制类型转换，字符转 -> 字节型切片
 	// 1.3.2 拿md5去数据库中查是否存在
 	u, err := l.svcCtx.ShortUrlMapModel.FindOneByMd5(l.ctx, sql.NullString{
-		String: "md5Value",
+		String: md5Value,
 		Valid:  true,
 	})
 
