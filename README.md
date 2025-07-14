@@ -6,6 +6,7 @@
 
 发号器表
 ```sql
+// 对stub字段添加唯一索引，目的是为了保证插入的值不重复
 CREATE TABLE `sequence`
 (
     `id`        bigint(20) unsigned NOT NULL AUTO_INCREMENT,
