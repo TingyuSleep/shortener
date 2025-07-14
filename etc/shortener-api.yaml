@@ -8,3 +8,13 @@ shortUrlDB:
 # 真正部署的时候，Sequence 与 shortUrlDB 是在两个数据库
 Sequence:
   DSN: root:root@tcp(127.0.0.1:3306)/shortener?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+
+
+# 打乱顺序更安全
+BaseString: 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
+
+# 短链接黑名单
+ShortUrlBlackList: ["fuck","stupid","version","convert","health","api"]
+
+# 短域名
+ShortDomain: q1mi.cn

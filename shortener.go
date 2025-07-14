@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"shortener/pkg/base62"
 
 	"shortener/internal/config"
 	"shortener/internal/handler"
@@ -20,6 +21,9 @@ func main() {
 	var c config.Config
 	conf.MustLoad(*configFile, &c)
 	fmt.Printf("load conf:%#v\n", c)
+
+	// base62模块的初始化
+	base62.MustInit(c.BaseString)
 
 	server := rest.MustNewServer(c.RestConf)
 	defer server.Stop()
