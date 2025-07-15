@@ -44,13 +44,13 @@ func (l *ConvertLogic) Convert(req *types.ConvertRequest) (resp *types.ConvertRe
 	// 1.3 判断数据库是否已经转链过（数据库中是否已经存在该长链）
 	// 1.3.1 给长链接生成md5值
 	md5Value := md5.Sum([]byte(req.LongUrl)) // []byte(字符串) 表示强制类型转换，字符转 -> 字节型切片
-	// 1.3.2 拿md5去数据库中查是否存在
+	// 1.3.2 拿md5去数据库中查是否存在,如果不存在，继续进行转链
 	u, err := l.svcCtx.ShortUrlMapModel.FindOneByMd5(l.ctx, sql.NullString{
 		String: md5Value,
 		Valid:  true,
 	})
 
-	if err != sqlx.ErrNotFound { // 错误不是未查询到记录：即可能查询到记录，也可能是普通的err
+	if !errors.Is(err, sqlx.ErrNotFound) { // 错误不是未查询到记录：即可能查询到记录，也可能是普通的err
 		if err == nil { // 说明查到了记录
 			return nil, fmt.Errorf("该链接已被转为:%s\n", u.Surl.String)
 		}
@@ -67,7 +67,7 @@ func (l *ConvertLogic) Convert(req *types.ConvertRequest) (resp *types.ConvertRe
 		return nil, err
 	}
 	_, err = l.svcCtx.ShortUrlMapModel.FindOneBySurl(l.ctx, sql.NullString{String: basePath, Valid: true})
-	if err != sqlx.ErrNotFound { // 错误不是未查询到记录：即可能查询到记录，也可能是普通的err
+	if !errors.Is(err, model.ErrNotFound) { // 错误不是未查询到记录：即可能查询到记录，也可能是普通的err
 		if err == nil { // 说明查到了记录
 			return nil, errors.New("该链接已经是短链了")
 		}

@@ -116,7 +116,7 @@ type ShortUrlDB struct {
 ```
 
 ## 参数校验
-1. 使用validator库
+使用validator库
 
 https://pkg.go.dev/github.com/go-playground/validator/v10
 
@@ -125,3 +125,24 @@ https://pkg.go.dev/github.com/go-playground/validator/v10
 go get -u github.com/go-playground/validator/v10
 ```
 在`shortener.api`中为结构体添加校验规则tag
+
+## 查看短链
+
+### 缓存版
+有两种方式：
+1. 使用自己的实现的缓存， surl -> lurl ，缓存的数据量少，节省缓存空间
+2. 使用go-zero自带的缓存， surl -> 数据行 ，不需要自己实现                 √(use)
+
+这里使用第二种方案：
+1. 添加缓存配置
+ - 配置文件yaml
+ - 配置config结构体
+2. 删除旧的model层代码
+ - 删除 shorturlmapmodel.go文件
+3. 重新生成model代码
+
+```bash
+goctl model mysql datasource -url="root:root@tcp(127.0.0.1:3306)/shortener" -table="short_url_map" -dir="./model" -c
+```
+4.修改svccontext层代码
+

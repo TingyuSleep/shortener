@@ -11,10 +11,14 @@ Sequence:
 
 
 # 打乱顺序更安全
-BaseString: 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
+BaseString: sE5nLm9XxKpQrT3vZaPdWc8VbN7YqRf2jA1kHtGhLzUwIoJdCqF0eN
 
 # 短链接黑名单
 ShortUrlBlackList: ["fuck","stupid","version","convert","health","api"]
 
 # 短域名
 ShortDomain: q1mi.cn
+
+# redis缓存
+CacheRedis:
+  - Host: 127.0.0.1:6379

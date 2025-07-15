@@ -23,7 +23,7 @@ func To62String(seq uint64) string {
 	if seq == 0 {
 		return string(base62Str[0])
 	}
-	bl := []byte{}
+	var bl []byte
 	for seq > 0 {
 		mod := seq % 62
 		div := seq / 62
@@ -33,8 +33,6 @@ func To62String(seq uint64) string {
 	// 反转。除k取余法
 	return string(reverse(bl))
 }
-
-// TODO: 62进制转为十进制
 
 func reverse(s []byte) []byte {
 	for i, j := 0, len(s)-1; i < len(s)/2; i, j = i+1, j-1 {
