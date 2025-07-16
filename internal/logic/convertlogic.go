@@ -45,10 +45,7 @@ func (l *ConvertLogic) Convert(req *types.ConvertRequest) (resp *types.ConvertRe
 	// 1.3.1 给长链接生成md5值
 	md5Value := md5.Sum([]byte(req.LongUrl)) // []byte(字符串) 表示强制类型转换，字符转 -> 字节型切片
 	// 1.3.2 拿md5去数据库中查是否存在,如果不存在，继续进行转链
-	u, err := l.svcCtx.ShortUrlMapModel.FindOneByMd5(l.ctx, sql.NullString{
-		String: md5Value,
-		Valid:  true,
-	})
+	u, err := l.svcCtx.ShortUrlMapModel.FindOneByMd5(l.ctx, sql.NullString{String: md5Value, Valid: true})
 
 	if !errors.Is(err, sqlx.ErrNotFound) { // 错误不是未查询到记录：即可能查询到记录，也可能是普通的err
 		if err == nil { // 说明查到了记录
@@ -106,6 +103,11 @@ func (l *ConvertLogic) Convert(req *types.ConvertRequest) (resp *types.ConvertRe
 	if err != nil {
 		logx.Errorw("ShortUrlMapModel.Insert failed", logx.LogField{Key: "err", Value: err.Error()})
 		return nil, err
+	}
+
+	// 将生成的短链接加入到布隆过滤器中
+	if err = l.svcCtx.Filter.Add([]byte(short)); err != nil {
+		logx.Errorw("BloomFilter.Add failed", logx.LogField{Key: "err", Value: err.Error()})
 	}
 
 	// 5. 返回响应

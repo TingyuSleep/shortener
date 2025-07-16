@@ -16,7 +16,7 @@ type Config struct {
 	BaseString        string // base62指定的基础字符串
 	ShortUrlBlackList []string
 	ShortDomain       string
-	CacheRedis        cache.CacheConf // redis缓存
+	CacheRedis        cache.CacheConf // redis缓存,CacheRedis是一个切片
 }
 
 type ShortUrlDB struct { // 命名结构体

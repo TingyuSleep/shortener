@@ -1,6 +1,6 @@
 Name: shortener-api
 Host: 0.0.0.0
-Port: 8888
+Port: 8085
 
 shortUrlDB:
   DSN: root:root@tcp(127.0.0.1:3306)/shortener?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
@@ -22,3 +22,4 @@ ShortDomain: q1mi.cn
 # redis缓存
 CacheRedis:
   - Host: 127.0.0.1:6379
+
